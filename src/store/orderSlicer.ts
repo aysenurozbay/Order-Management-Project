@@ -4,6 +4,7 @@ import { Basket, Order } from '../data/DataTypes';
 export interface OrderSliceState {
     orders: Order[];
     baskets: Basket[];
+    basketItems: Order[];
     loading: boolean;
     error: boolean;
 }
@@ -11,6 +12,7 @@ export interface OrderSliceState {
 const initialState: OrderSliceState = {
     orders: [],
     baskets: [],
+    basketItems: [],
     loading: false,
     error: false,
 };
@@ -24,6 +26,9 @@ export const orderSlice = createSlice({
         },
         setBasket(state, action) {
             state.baskets = action.payload;
+        },
+        setBasketItems(state, action) {
+            state.basketItems = action.payload;
         },
         addCartItem: (state, action) => {
             const newOrder = { ...action.payload.order, status: 'IN_BASKET' };
@@ -46,6 +51,14 @@ export const orderSlice = createSlice({
             );
             state.orders = _orders;
         },
+        updateBasketOrderStatus: (state, action: PayloadAction<{ orderItem: Order }>) => {
+            const newOrder = action.payload.orderItem;
+
+            const _orders = state.basketItems.map(order =>
+                order.id === newOrder.id ? newOrder : order,
+            );
+            state.basketItems = _orders;
+        },
         updateCartItemStatus: (state, action: PayloadAction<{ order: Order[] }>) => {
             const cartData = action.payload.order;
             const updatedOrders = state.orders.map(order => {
@@ -65,8 +78,10 @@ export const {
     addCartItem,
     removeCartItem,
     setBasket,
+    setBasketItems,
     updateOrderStatus,
     updateCartItemStatus,
+    updateBasketOrderStatus,
 } = orderSlice.actions;
 
 export const selectNumberOfItem = (state: any) =>

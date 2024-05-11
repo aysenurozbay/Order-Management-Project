@@ -1,8 +1,17 @@
 {
   "couriers": [
-    { "id": "1", "name": "Cemrehan Çavdar" },
-    { "id": "2", "name": "Yasin Beyazlı" },
-    { "id": "3", "name": "Duhan Günsel" }
+    {
+      "id": "1",
+      "name": "Cemrehan Çavdar"
+    },
+    {
+      "id": "2",
+      "name": "Yasin Beyazlı"
+    },
+    {
+      "id": "3",
+      "name": "Duhan Günsel"
+    }
   ],
   "orders": [
     {
@@ -10,10 +19,16 @@
       "address": "Kadıköy, İstanbul, Turkey, Sahte Sokak, No: 123 Daire: 4",
       "payment": "Credit Card",
       "delivery_time": "2024-12-24T23:59:59Z",
-      "status": "PREPARING",
+      "status": "DELIVERED",
       "items": [
-        { "id": "1", "name": "Şerifali Köfte" },
-        { "id": "2", "name": "Mercimek Çorbası" }
+        {
+          "id": "1",
+          "name": "Şerifali Köfte"
+        },
+        {
+          "id": "2",
+          "name": "Mercimek Çorbası"
+        }
       ]
     },
     {
@@ -23,8 +38,14 @@
       "delivery_time": "2024-12-25T12:00:00Z",
       "status": "PREPARING",
       "items": [
-        { "id": "3", "name": "Adana Kebap" },
-        { "id": "4", "name": "Baklava" }
+        {
+          "id": "3",
+          "name": "Adana Kebap"
+        },
+        {
+          "id": "4",
+          "name": "Baklava"
+        }
       ]
     },
     {
@@ -34,17 +55,50 @@
       "status": "PREPARING",
       "delivery_time": "2024-12-26T23:59:59Z",
       "items": [
-        { "id": "5", "name": "Tavuklu Salata" },
-        { "id": "6", "name": "Ayran" }
+        {
+          "id": "5",
+          "name": "Tavuklu Salata"
+        },
+        {
+          "id": "6",
+          "name": "Ayran"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "address": "Kadıköy, İstanbul, Turkey,  Başka bir Sok, No: 456 Bina: 7 Daire: 8 Bina Adı: Uzun Apartmanı",
+      "payment": "Credit Card",
+      "status": "DELIVERED",
+      "delivery_time": "2024-12-26T23:59:59Z",
+      "items": [
+        {
+          "id": "5",
+          "name": "Sushi"
+        },
+        {
+          "id": "6",
+          "name": "Sake"
+        }
       ]
     }
   ],
   "baskets": [
     {
-      "id": "1",
-      "courier_id": "1",
-      "status": "ON_THE_WAY",
-      "orders": [1, 2]
+      "courier_id": "2",
+      "status": "DONE",
+      "orders": [
+        "1"
+      ],
+      "id": 1
+    },
+    {
+      "courier_id": "2",
+      "status": "DONE",
+      "orders": [
+        "4"
+      ],
+      "id": 2
     }
   ]
 }

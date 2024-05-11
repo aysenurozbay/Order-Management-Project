@@ -1,9 +1,10 @@
 import { Icon } from '@ant-design/react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Basket, Order } from '../../data/DataTypes';
-import { orderSlice } from '../../store/orderSlicer';
+import { orderSlice, setBasketItems, updateBasketOrderStatus } from '../../store/orderSlicer';
+import { RootState } from '../../store/store';
 import { commonStyles } from '../../styles/commonStyles';
 import { getBaskets } from '../../utils/api/getBaskets';
 import { getCourier } from '../../utils/api/getCourier';
@@ -38,12 +39,17 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
     };
 
     const { mutate: mutateOrder } = updateOrderStatus({
-        onSuccess: res => {
-            dispatch(orderSlice.actions.updateOrderStatus({ basketItem }));
+        onSuccess: data => {
+            dispatch(updateBasketOrderStatus({ orderItem: data }));
             refetchOrders();
         },
-        onError: error => {},
     });
+
+    const { basketItems } = useSelector((state: RootState) => state.order);
+
+    useEffect(() => {
+        dispatch(setBasketItems(orderItems));
+    }, [orderItems, dispatch]);
 
     const handleDelivery = (
         orderStatus: 'PREPARING' | 'DELIVERED' | 'ON_THE_WAY' | 'CANCELLED' | 'IN_BASKET',
@@ -51,32 +57,14 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
     ) => {
         const order = { ...food, status: orderStatus };
         mutateOrder({ order });
-        // refetch();
     };
 
-    const checkAndUpdateBasketStatus = () => {
-        let allDelivered = true;
-        if (orderItems) {
-            for (const food of orderItems) {
-                if (food.status !== 'DELIVERED' && food.status !== 'CANCELLED') {
-                    allDelivered = false;
-                    return false;
-                }
-            }
-        }
-
-        if (allDelivered) {
-            return true;
-        }
-    };
+    const checkAndUpdateBasketStatus = () =>
+        !orderItems?.some(order => order.status !== 'DELIVERED' && order.status !== 'CANCELLED');
 
     const { mutate: mutateBasket } = updateBasketStatus({
-        onSuccess: res => {
-            console.log(`mutateBasket SUCCESS`, res);
+        onSuccess: () => {
             refetchBaskets();
-        },
-        onError: error => {
-            console.log(`updateOrderStatusonError`, error);
         },
     });
 
@@ -98,16 +86,12 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
 
             {isExpanded && (
                 <View style={styles.detailContainer}>
-                    {orderItems?.map((food, index) => {
-                        console.log(food.items);
-
+                    {basketItems?.map((food, index) => {
                         return (
                             <View style={styles.itemDetailsContainer} key={index}>
                                 <View style={styles.headerContainer}>
                                     <View>
                                         {food.items?.map((item, index) => {
-                                            console.log(food.status);
-
                                             return (
                                                 <View style={styles.foodNameContainer} key={index}>
                                                     <Text style={styles.foodName}>{index + 1}</Text>
@@ -116,6 +100,7 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
                                             );
                                         })}
                                         <Text style={styles.address}> {food.address}</Text>
+                                        <Text style={styles.address}> {food.status}</Text>
                                     </View>
                                     {food.status === 'DELIVERED' && (
                                         <Icon

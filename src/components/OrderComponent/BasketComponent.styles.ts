@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: borderRadius.medium,
         padding: paddingConsts.small,
+        marginRight: marginConsts.small,
     },
 
     buttonLabel: {},
