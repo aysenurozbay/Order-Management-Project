@@ -30,7 +30,6 @@ export const styles = StyleSheet.create({
     },
     headerContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'space-between',
     },
     cartButton: {
@@ -54,7 +53,11 @@ export const styles = StyleSheet.create({
         fontSize: 12,
     },
     detailContainer: {
-        paddingVertical: paddingConsts.medium,
+        margin: marginConsts.small,
+        padding: paddingConsts.medium,
+        borderRadius: borderRadius.small,
+        borderColor: colors.secondary200,
+        borderWidth: 1,
     },
     itemDetailsContainer: {},
     statusButton: {
@@ -67,4 +70,5 @@ export const styles = StyleSheet.create({
     },
 
     buttonLabel: {},
+    finishBasketButton: {},
 });

@@ -1,15 +1,16 @@
-import React from 'react';
+import { Icon } from '@ant-design/react-native';
+import { useNavigation } from '@react-navigation/native';
 import {
     NativeStackNavigationProp,
     createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import HeaderCartButton from '../components/Header/HeaderCartButton';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import CartScreen from '../screens/CartScreen/CartScreen';
 import TabNavigator from './TabNavigator';
 import { AppParams } from './types/NavigationParams';
-import { Icon } from '@ant-design/react-native';
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native';
+import BasketHistoryScreen from '../screens/BasketHistory/BasketHistoryScreen';
+import colors from '../utils/colors';
 
 const Stack = createNativeStackNavigator<AppParams>();
 
@@ -20,7 +21,7 @@ const GoBackComponent = () => {
 
     return (
         <TouchableOpacity onPress={goBackHandler}>
-            <Icon name="arrow-left" size="md" />
+            <Icon name="arrow-left" size="md" color={colors.white} />
         </TouchableOpacity>
     );
 };
@@ -31,6 +32,7 @@ const AppNavigator = () => {
             screenOptions={{
                 headerTransparent: true,
                 contentStyle: { backgroundColor: 'transparent' },
+                headerTintColor: colors.white,
             }}>
             <Stack.Screen
                 name="Orders"
@@ -45,6 +47,17 @@ const AppNavigator = () => {
                 options={{
                     headerLeft: () => <GoBackComponent />,
                     title: 'Siparisler',
+                    animationTypeForReplace: 'push',
+                }}
+            />
+            <Stack.Screen
+                name="History"
+                component={BasketHistoryScreen}
+                options={{
+                    headerLeft: () => <GoBackComponent />,
+                    title: 'Gecmis',
+                    animation: 'slide_from_left',
+                    animationTypeForReplace: 'push',
                 }}
             />
         </Stack.Navigator>

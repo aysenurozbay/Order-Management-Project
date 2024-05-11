@@ -1,15 +1,15 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-import { Icon } from '@ant-design/react-native';
-import colors from '../../utils/colors';
-import { styles } from './HeaderCartButton.styles';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
+import colors from '../../../utils/colors';
+import { styles } from './HeaderCartButton.styles';
 
-import { AppParams } from '../../navigation/types/NavigationParams';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { selectNumberOfItem } from '../../store/orderSlicer';
+import BasketIcon from '../../../assets/icons/BasketIcon';
+import { AppParams } from '../../../navigation/types/NavigationParams';
+import { selectNumberOfItem } from '../../../store/orderSlicer';
 
 const HeaderCartButton = () => {
     const navigation: NativeStackNavigationProp<AppParams> = useNavigation();
@@ -22,7 +22,7 @@ const HeaderCartButton = () => {
 
     return (
         <TouchableOpacity style={styles.container} onPress={handleOnPress}>
-            <Icon name="shopping" size="md" color={colors.white} />
+            <BasketIcon fill={colors.white} size={20} />
             <Text style={styles.itemText}> {numberOfItems}</Text>
         </TouchableOpacity>
     );

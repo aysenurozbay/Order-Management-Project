@@ -39,7 +39,14 @@ export const orderSlice = createSlice({
             );
             state.orders = _orders;
         },
-        updateStatus: (state, action: PayloadAction<{ order: Order[] }>) => {
+        updateOrderStatus: (state, action) => {
+            const newOrder = { ...action.payload.order, status: 'PREPARING' };
+            const _orders = state.orders.map(order =>
+                order.id === action.payload.order.id ? newOrder : order,
+            );
+            state.orders = _orders;
+        },
+        updateCartItemStatus: (state, action: PayloadAction<{ order: Order[] }>) => {
             const cartData = action.payload.order;
             const updatedOrders = state.orders.map(order => {
                 if (cartData.some(cartOrder => cartOrder.id === order.id)) {
@@ -50,13 +57,17 @@ export const orderSlice = createSlice({
             });
             state.orders = updatedOrders;
         },
-
-        clearCart: (state, action) => {},
     },
 });
 
-export const { setOrders, addCartItem, removeCartItem, setBasket, updateStatus } =
-    orderSlice.actions;
+export const {
+    setOrders,
+    addCartItem,
+    removeCartItem,
+    setBasket,
+    updateOrderStatus,
+    updateCartItemStatus,
+} = orderSlice.actions;
 
 export const selectNumberOfItem = (state: any) =>
     state.order.orders?.filter((_order: any) => _order.status === 'IN_BASKET').length;

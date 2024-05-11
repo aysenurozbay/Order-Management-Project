@@ -6,7 +6,7 @@ export const borderRadius = {
 export const marginConsts = {
     small: 5,
     medium: 10,
-    large: 50,
+    large: 15,
 };
 
 export const paddingConsts = {
@@ -15,7 +15,7 @@ export const paddingConsts = {
     medium: 16,
     large: 20,
     xLarge: 24,
-    huge: 32,
+    huge: 35,
 };
 export const orderStates = {
     PENDING: 'Hazırlanıyor',

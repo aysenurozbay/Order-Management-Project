@@ -4,27 +4,32 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Basket, Order } from '../../data/DataTypes';
 import { orderSlice } from '../../store/orderSlicer';
+import { commonStyles } from '../../styles/commonStyles';
+import { getBaskets } from '../../utils/api/getBaskets';
 import { getCourier } from '../../utils/api/getCourier';
 import { getOrders } from '../../utils/api/getOrders';
+import { updateBasketStatus } from '../../utils/api/updateBasketStatus';
 import { updateOrderStatus } from '../../utils/api/updateOrderStatus';
 import colors from '../../utils/colors';
 import { styles } from './BasketComponent.styles';
 
 interface IOrderComponentProps {
-    order: Basket;
+    basketItem: Basket;
 }
 
-const BasketComponent = ({ order }: IOrderComponentProps) => {
+const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
     const statusLabels = {
         ['PREPARING']: 'Hazırlanıyor',
         ['DELIVERED']: 'Teslim Edildi',
         ['ON_THE_WAY']: 'Yolda',
         ['CANCELLED']: 'İptal Edildi',
+        ['DONE']: 'Tamamlandi',
     };
     const dispatch = useDispatch();
 
-    const { data: courier } = getCourier(order.courier_id);
-    const { data: orderItems, refetch, isLoading, status } = getOrders(order.orders);
+    const { data: courier } = getCourier(basketItem.courier_id);
+    const { data: orderItems, refetch: refetchOrders } = getOrders(basketItem.orders);
+    const { refetch: refetchBaskets } = getBaskets();
 
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -32,18 +37,12 @@ const BasketComponent = ({ order }: IOrderComponentProps) => {
         setIsExpanded(!isExpanded);
     };
 
-    const { mutate } = updateOrderStatus({
+    const { mutate: mutateOrder } = updateOrderStatus({
         onSuccess: res => {
-            console.log(`SUCCESS`, res);
-            dispatch(orderSlice.actions.updateStatus({ order }));
-
-            // Toast.success('Sipariş sepete eklendi!!');
+            dispatch(orderSlice.actions.updateOrderStatus({ basketItem }));
+            refetchOrders();
         },
-        onError: error => {
-            console.log(`onError`, error);
-
-            // Toast.error('Sipariş sepete eklenirken bir hata oluştu: ' + error.message);
-        },
+        onError: error => {},
     });
 
     const handleDelivery = (
@@ -51,76 +50,129 @@ const BasketComponent = ({ order }: IOrderComponentProps) => {
         food: Order,
     ) => {
         const order = { ...food, status: orderStatus };
-        mutate({ order });
+        mutateOrder({ order });
         // refetch();
     };
 
-    const tekara = () => {
-        refetch();
+    const checkAndUpdateBasketStatus = () => {
+        let allDelivered = true;
+        if (orderItems) {
+            for (const food of orderItems) {
+                if (food.status !== 'DELIVERED' && food.status !== 'CANCELLED') {
+                    allDelivered = false;
+                    return false;
+                }
+            }
+        }
+
+        if (allDelivered) {
+            return true;
+        }
     };
+
+    const { mutate: mutateBasket } = updateBasketStatus({
+        onSuccess: res => {
+            console.log(`mutateBasket SUCCESS`, res);
+            refetchBaskets();
+        },
+        onError: error => {
+            console.log(`updateOrderStatusonError`, error);
+        },
+    });
+
+    const handleFinishBasket = () => {
+        const updatedBasket: Basket = { ...basketItem, status: 'DONE' };
+        mutateBasket({ basket: updatedBasket });
+    };
+
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={toggleExpand}>
             <View style={styles.headerContainer}>
-                {statusLabels[order.status] && (
-                    <Text style={styles.statusText}> {statusLabels[order.status]} </Text>
+                {statusLabels[basketItem.status] && (
+                    <Text style={styles.statusText}>
+                        # {basketItem.id} - {statusLabels[basketItem?.status]}
+                    </Text>
                 )}
             </View>
             <Text> {courier?.name}</Text>
 
-            {/* {isExpanded && ( */}
-            <View style={styles.detailContainer}>
-                {orderItems?.map((food, index) => {
-                    console.log(food.items);
+            {isExpanded && (
+                <View style={styles.detailContainer}>
+                    {orderItems?.map((food, index) => {
+                        console.log(food.items);
 
-                    return (
-                        <View style={styles.itemDetailsContainer} key={index}>
-                            <View>
-                                {food.items?.map((item, index) => {
-                                    return (
-                                        <View style={styles.foodNameContainer} key={index}>
-                                            <Text style={styles.foodName}> {index + 1}</Text>
-                                            <Text style={styles.foodName}> {item.name}</Text>
-                                        </View>
-                                    );
-                                })}
-                                <Text style={styles.address}> {food.address}</Text>
-                            </View>
+                        return (
+                            <View style={styles.itemDetailsContainer} key={index}>
+                                <View style={styles.headerContainer}>
+                                    <View>
+                                        {food.items?.map((item, index) => {
+                                            console.log(food.status);
 
-                            {food.status === 'DELIVERED' && (
-                                <Icon name="check-square" size={'md'} color={colors.green} />
-                            )}
-
-                            {food.status === 'PREPARING' && (
-                                <View style={styles.deliveryButtonContainer}>
-                                    <TouchableOpacity
-                                        activeOpacity={0.5}
-                                        onPress={() => handleDelivery('DELIVERED', food)}
-                                        style={styles.statusButton}>
+                                            return (
+                                                <View style={styles.foodNameContainer} key={index}>
+                                                    <Text style={styles.foodName}>{index + 1}</Text>
+                                                    <Text style={styles.foodName}>{item.name}</Text>
+                                                </View>
+                                            );
+                                        })}
+                                        <Text style={styles.address}> {food.address}</Text>
+                                    </View>
+                                    {food.status === 'DELIVERED' && (
                                         <Icon
                                             name="check-square"
                                             size={'md'}
                                             color={colors.green}
                                         />
-                                        <Text style={styles.buttonLabel}> Teslim Edildi</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        activeOpacity={0.5}
-                                        onPress={() => handleDelivery('CANCELLED', food)}
-                                        style={styles.statusButton}>
+                                    )}
+                                    {food.status === 'CANCELLED' && (
                                         <Icon
                                             name="close-square"
                                             size={'md'}
                                             color={colors.errorPrimary}
                                         />
-                                        <Text style={styles.buttonLabel}> Teslim Edildi</Text>
-                                    </TouchableOpacity>
+                                    )}
                                 </View>
-                            )}
-                        </View>
-                    );
-                })}
-            </View>
-        </View>
+
+                                {food.status === 'PREPARING' && (
+                                    <View style={styles.deliveryButtonContainer}>
+                                        <TouchableOpacity
+                                            activeOpacity={0.5}
+                                            onPress={() => handleDelivery('DELIVERED', food)}
+                                            style={styles.statusButton}>
+                                            <Icon
+                                                name="check-square"
+                                                size={'md'}
+                                                color={colors.green}
+                                            />
+                                            <Text style={styles.buttonLabel}> Teslim Edildi</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            activeOpacity={0.5}
+                                            onPress={() => handleDelivery('CANCELLED', food)}
+                                            style={styles.statusButton}>
+                                            <Icon
+                                                name="close-square"
+                                                size={'md'}
+                                                color={colors.errorPrimary}
+                                            />
+                                            <Text style={styles.buttonLabel}> Teslim Edildi</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+                            </View>
+                        );
+                    })}
+                </View>
+            )}
+            {basketItem.status === 'ON_THE_WAY' && checkAndUpdateBasketStatus() && (
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={handleFinishBasket}
+                    style={commonStyles.button}>
+                    <Text style={commonStyles.buttonLabel}> Siparisi Tamamla </Text>
+                </TouchableOpacity>
+            )}
+        </TouchableOpacity>
     );
 };
 

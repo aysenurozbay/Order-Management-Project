@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import OrderComponent from '../../components/OrderComponent/OrderComponent';
 import CourierModal from '../../components/Courier/CourierModal';
+import { paddingConsts } from '../../utils/consts';
 
 const ListEmptyComponent = () => {
     return <Text style={styles.emptyLabel}> Cart is empty...</Text>;
@@ -23,7 +24,7 @@ const CartScreen = () => {
     const handleDeliverButton = () => setModalVisible(true);
 
     return (
-        <View style={commonStyles.flex}>
+        <View style={[commonStyles.flex, { paddingTop: paddingConsts.huge }]}>
             <FlatList
                 data={filteredData}
                 renderItem={renderItem}

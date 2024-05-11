@@ -1,4 +1,4 @@
-import { Icon, Radio, Toast } from '@ant-design/react-native';
+import { Icon, Radio } from '@ant-design/react-native';
 import { OnGroupChangeParams } from '@ant-design/react-native/lib/radio/PropsType';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
@@ -7,6 +7,7 @@ import { Order } from '../../data/DataTypes';
 import { orderSlice } from '../../store/orderSlicer';
 import { commonStyles } from '../../styles/commonStyles';
 import { addToCart } from '../../utils/api/addtoCart';
+import { getBaskets } from '../../utils/api/getBaskets';
 import { getCourier } from '../../utils/api/getCourier';
 import colors from '../../utils/colors';
 import { styles } from './CourierModal.styles';
@@ -25,6 +26,8 @@ const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalMod
     const [showError, setShowError] = useState<boolean>();
     const dispatch = useDispatch();
 
+    const { refetch } = getBaskets();
+
     const { data: courierData } = getCourier();
 
     const radioOnChange = (e: OnGroupChangeParams) => {
@@ -32,16 +35,13 @@ const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalMod
     };
 
     const { mutate } = addToCart({
-        onSuccess: res => {
-            console.log(`SUCCESS`, res);
-            dispatch(orderSlice.actions.updateStatus({ order: cartData }));
+        onSuccess: () => {
+            dispatch(orderSlice.actions.updateCartItemStatus({ order: cartData }));
             setModalVisible(!modalVisible);
-            // Toast.success('Sipariş sepete eklendi!!');
+            refetch();
         },
         onError: error => {
             console.log(`onError`, error);
-
-            // Toast.error('Sipariş sepete eklenirken bir hata oluştu: ' + error.message);
         },
     });
 
@@ -59,11 +59,6 @@ const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalMod
             };
             mutate({ newData });
         }
-    };
-
-    const vısey = () => {
-        dispatch(orderSlice.actions.updateStatus({ order: cartData }));
-        setModalVisible(!modalVisible);
     };
 
     return (

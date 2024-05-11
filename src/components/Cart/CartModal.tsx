@@ -1,9 +1,8 @@
-import { Icon } from '@ant-design/react-native';
-import { OnGroupChangeParams } from '@ant-design/react-native/lib/radio/PropsType';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Icon } from '@ant-design/react-native';
+
 import { Order } from '../../data/DataTypes';
-import { getCourier } from '../../utils/api/getCourier';
 import colors from '../../utils/colors';
 import { styles } from './CarModal.styles';
 
@@ -12,27 +11,19 @@ interface ICartModalModalProps {
     setModalVisible: Dispatch<SetStateAction<boolean>>;
     order: Order;
 }
-type RadioValue = string | number;
 
 const CartModal = ({ modalVisible, setModalVisible, order }: ICartModalModalProps) => {
     const handleCloseModal = () => setModalVisible(!modalVisible);
 
-    const [selectCourier, setSelectCourier] = useState<RadioValue>();
-    const [showError, setShowError] = useState<boolean>();
+    const { delivery_time } = order;
 
-    const { data: courierData } = getCourier();
+    const date = new Date(delivery_time);
+    const formattedDate = date.toLocaleString();
 
-    const radioOnChange = (e: OnGroupChangeParams) => {
-        setSelectCourier(e.target.value);
+    const paymentLookUp = {
+        ['Cash']: 'Nakit',
+        ['Credit Card']: 'Kredi Karti',
     };
-
-    const handleAddtoCart = () => {};
-    // const { mutate } = addtoCart({
-    //     onSuccess: res => {
-    //         Toast.success('Siparis sepete Eklendi!! ');
-    //     },
-    // });
-    // const onSubmit = async () => mutate({});
 
     return (
         <View style={styles.centeredView}>
@@ -60,7 +51,10 @@ const CartModal = ({ modalVisible, setModalVisible, order }: ICartModalModalProp
                             );
                         })}
                         <Text style={styles.address}>ADRES: {order.address}</Text>
-                        <Text style={styles.address}>ADRES: {order.delivery_time}</Text>
+                        <Text style={styles.address}>SIPARIS ZAMANI: {formattedDate}</Text>
+                        <Text style={styles.address}>
+                            ODEME TIPI: {paymentLookUp[order.payment]}
+                        </Text>
                     </View>
                 </View>
             </Modal>

@@ -18,7 +18,7 @@ export type Order = {
 export type Basket = {
     id: string;
     courier_id: string;
-    status: 'ON_THE_WAY' | 'DELIVERED' | 'CANCELLED';
+    status: 'ON_THE_WAY' | 'DELIVERED' | 'CANCELLED' | 'DONE';
     orders: string[];
 };
 

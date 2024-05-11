@@ -6,8 +6,9 @@ import { setBasket } from '../../store/orderSlicer';
 import { RootState } from '../../store/store';
 import { commonStyles } from '../../styles/commonStyles';
 import { getBaskets } from '../../utils/api/getBaskets';
+import { paddingConsts } from '../../utils/consts';
 
-const PendingOrdersScreen = () => {
+const BasketHistoryScreen = () => {
     const { data, isLoading, isError } = getBaskets();
 
     const dispatch = useDispatch();
@@ -18,10 +19,10 @@ const PendingOrdersScreen = () => {
     }, [data, dispatch]);
 
     const renderItem = ({ item }: any) =>
-        item.status === 'ON_THE_WAY' ? <BasketComponent basketItem={item} /> : null;
+        item.status === 'DONE' ? <BasketComponent basketItem={item} /> : null;
 
     return (
-        <View style={commonStyles.flex}>
+        <View style={[commonStyles.flex, { paddingTop: paddingConsts.huge }]}>
             {isLoading && <Text> LOADING...</Text>}
             {isError && <Text> Bir Hata Olustu Daha Sonra Tekrar Deneyiniz ...</Text>}
             <FlatList data={baskets} renderItem={renderItem} keyExtractor={item => item.id} />
@@ -29,4 +30,4 @@ const PendingOrdersScreen = () => {
     );
 };
 
-export default PendingOrdersScreen;
+export default BasketHistoryScreen;
