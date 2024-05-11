@@ -1,4 +1,4 @@
-import { Icon, Radio, Toast } from '@ant-design/react-native';
+import { Icon } from '@ant-design/react-native';
 import { OnGroupChangeParams } from '@ant-design/react-native/lib/radio/PropsType';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
@@ -6,7 +6,6 @@ import { Order } from '../../data/DataTypes';
 import { getCourier } from '../../utils/api/getCourier';
 import colors from '../../utils/colors';
 import { styles } from './CarModal.styles';
-import { addtoCart } from '../../utils/api/addtoCart';
 
 interface ICartModalModalProps {
     modalVisible: boolean;
@@ -62,23 +61,6 @@ const CartModal = ({ modalVisible, setModalVisible, order }: ICartModalModalProp
                         })}
                         <Text style={styles.address}>ADRES: {order.address}</Text>
                         <Text style={styles.address}>ADRES: {order.delivery_time}</Text>
-
-                        {/* <Radio.Group onChange={radioOnChange} value={selectCourier}>
-                            {courierData?.map((courier, index) => {
-                                return (
-                                    <Radio value={courier.id} key={index}>
-                                        {courier.name}
-                                    </Radio>
-                                );
-                            })}
-                        </Radio.Group>
-                        {showError && <Text> Kurye secin !!!</Text>} */}
-                        <TouchableOpacity
-                            style={styles.assignCourier}
-                            activeOpacity={0.5}
-                            onPress={handleAddtoCart}>
-                            <Text>Sepete Ekle </Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>

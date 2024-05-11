@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { styles } from './OrderComponent.styles';
+import { useDispatch } from 'react-redux';
 import { Order } from '../../data/DataTypes';
+import { orderSlice } from '../../store/orderSlicer';
 import CartModal from '../Cart/CartModal';
+import { styles } from './OrderComponent.styles';
 
 interface IOrderComponentProps {
     order: Order;
 }
 const OrderComponent = ({ order }: IOrderComponentProps) => {
     const statusLabels = {
-        ['PREPARING']: 'HAZIRLANIYOR',
+        ['PREPARING']: 'Hazirlaniyor',
         ['DELIVERED']: 'Teslim Edildi',
         ['ON_THE_WAY']: 'Yolda',
         ['CANCELLED']: 'Iptal Edildi',
+        ['IN_BASKET']: 'Sepette',
     };
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    const handleAddtoCart = () => setModalVisible(true);
     const handleDetailsButton = () => setModalVisible(true);
+
+    // const cartOrder = useSelector(state => state.cart.cartOrders);
+    const dispatch = useDispatch();
+
+    const handleAddtoCart = () => {
+        //dispatch(orderSlice.actions.removeFromOrders({ order }));
+        dispatch(orderSlice.actions.addCartItem({ order }));
+    };
+    const handleRemoveFromCart = () => {
+        //dispatch(orderSlice.actions.removeFromOrders({ order }));
+        dispatch(orderSlice.actions.removeCartItem({ order }));
+    };
 
     return (
         <View style={styles.container}>
@@ -26,12 +40,23 @@ const OrderComponent = ({ order }: IOrderComponentProps) => {
                 {statusLabels[order.status] && (
                     <Text style={styles.statusText}> {statusLabels[order.status]} </Text>
                 )}
-                <TouchableOpacity
-                    activeOpacity={0.5}
-                    style={styles.cartButton}
-                    onPress={handleAddtoCart}>
-                    <Text style={styles.cartButtonTitle}> Sepete Ekle </Text>
-                </TouchableOpacity>
+
+                {order.status === 'PREPARING' && (
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        style={styles.cartButton}
+                        onPress={handleAddtoCart}>
+                        <Text style={styles.cartButtonTitle}> Sepete Ekle </Text>
+                    </TouchableOpacity>
+                )}
+                {order.status === 'IN_BASKET' && (
+                    <TouchableOpacity
+                        activeOpacity={0.5}
+                        style={styles.cartButton}
+                        onPress={handleRemoveFromCart}>
+                        <Text style={styles.cartButtonTitle}> Sepetten Cikar </Text>
+                    </TouchableOpacity>
+                )}
             </View>
 
             {order.items.map((food, index) => {

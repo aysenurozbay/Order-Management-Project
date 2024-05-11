@@ -13,9 +13,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		47D4FB529F4C403DB2573360 /* antfill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BE7A7317F204E8C911ABD9A /* antfill.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		47D4FB529F4C403DB2573360 /* antfill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BE7A7317F204E8C911ABD9A /* antfill.ttf */; };
 		926EE0BE5C904E6E89CD69E9 /* antoutline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4964CEAE28D47E1A29755DF /* antoutline.ttf */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +41,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PaketMutfakOrderProcess/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = PaketMutfakOrderProcess/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE7A7317F204E8C911ABD9A /* antfill.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = antfill.ttf; path = "../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-PaketMutfakOrderProcess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaketMutfakOrderProcess.debug.xcconfig"; path = "Target Support Files/Pods-PaketMutfakOrderProcess/Pods-PaketMutfakOrderProcess.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-PaketMutfakOrderProcess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaketMutfakOrderProcess.release.xcconfig"; path = "Target Support Files/Pods-PaketMutfakOrderProcess/Pods-PaketMutfakOrderProcess.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.debug.xcconfig"; path = "Target Support Files/Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests/Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -48,9 +49,8 @@
 		7E288E1226A65BCC37334408 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = PaketMutfakOrderProcess/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = PaketMutfakOrderProcess/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.release.xcconfig"; path = "Target Support Files/Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests/Pods-PaketMutfakOrderProcess-PaketMutfakOrderProcessTests.release.xcconfig"; sourceTree = "<group>"; };
+		A4964CEAE28D47E1A29755DF /* antoutline.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = antoutline.ttf; path = "../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		2BE7A7317F204E8C911ABD9A /* antfill.ttf */ = {isa = PBXFileReference; name = "antfill.ttf"; path = "../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		A4964CEAE28D47E1A29755DF /* antoutline.ttf */ = {isa = PBXFileReference; name = "antoutline.ttf"; path = "../node_modules/@ant-design/icons-react-native/fonts/antoutline.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +115,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		394161A5489D4CE38BD59907 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2BE7A7317F204E8C911ABD9A /* antfill.ttf */,
+				A4964CEAE28D47E1A29755DF /* antoutline.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,16 +167,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		394161A5489D4CE38BD59907 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				2BE7A7317F204E8C911ABD9A /* antfill.ttf */,
-				A4964CEAE28D47E1A29755DF /* antoutline.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 

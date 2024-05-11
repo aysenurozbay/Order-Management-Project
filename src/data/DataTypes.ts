@@ -8,7 +8,7 @@ export type Order = {
     address: string;
     payment: 'Cash' | 'Credit Card';
     delivery_time: string;
-    status: 'PREPARING' | 'DELIVERED' | 'ON_THE_WAY' | 'CANCELLED';
+    status: 'PREPARING' | 'DELIVERED' | 'ON_THE_WAY' | 'CANCELLED' | 'IN_BASKET';
     items: {
         id: string;
         name: string;
@@ -18,7 +18,7 @@ export type Order = {
 export type Basket = {
     id: string;
     courier_id: string;
-    status: 'ON_THE_WAY' | 'DELIVERED';
+    status: 'ON_THE_WAY' | 'DELIVERED' | 'CANCELLED';
     orders: string[];
 };
 

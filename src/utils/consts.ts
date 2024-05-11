@@ -17,3 +17,10 @@ export const paddingConsts = {
     xLarge: 24,
     huge: 32,
 };
+export const orderStates = {
+    PENDING: 'Hazırlanıyor',
+    DELIVERED: 'Teslim Edildi',
+    ON_THE_WAY: 'Yolda',
+    CANCELLED: 'İptal Edildi',
+    IN_BASKET: 'Sepette',
+};

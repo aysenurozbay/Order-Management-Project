@@ -1,24 +1,24 @@
 import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { Basket } from '../../data/DataTypes';
 import baseAPI from './api';
+import { Order } from '../../data/DataTypes';
 
 interface PostCartProps {
-    newData: Basket;
+    order: Order;
 }
 
 export interface IAddToCartProps
     extends UseMutationOptions<any, AxiosError, PostCartProps, unknown> {}
 
-const postCart = async ({ newData }: PostCartProps) => {
-    const response = await baseAPI.post<any>('/baskets', newData);
+const postStatus = async ({ order }: PostCartProps) => {
+    const response = await baseAPI.put<any>(`/orders/${order.id}`, { ...order });
     return response.data;
 };
 
-const addToCart = ({ onSuccess, onError }: IAddToCartProps) =>
+const updateOrderStatus = ({ onSuccess, onError }: IAddToCartProps) =>
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useMutation<any, AxiosError, PostCartProps, unknown>({
-        mutationFn: postCart,
+        mutationFn: postStatus,
         onSuccess: (data, variables, context) => {
             onSuccess && onSuccess(data, variables, context);
         },
@@ -26,4 +26,4 @@ const addToCart = ({ onSuccess, onError }: IAddToCartProps) =>
             onError && onError(error, variables, context);
         },
     });
-export { addToCart };
+export { updateOrderStatus };

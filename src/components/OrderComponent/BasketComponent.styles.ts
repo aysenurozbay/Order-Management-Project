@@ -43,13 +43,28 @@ export const styles = StyleSheet.create({
         fontWeight: '500',
         fontSize: 12,
     },
+    deliveryButtonContainer: {
+        flexDirection: 'row',
+        marginRight: marginConsts.medium,
+    },
     detailText: {
         textAlign: 'right',
         paddingHorizontal: paddingConsts.tiny,
         textDecorationLine: 'underline',
         fontSize: 12,
     },
-    deliveryButtonContainer: {
-        flexDirection: 'row',
+    detailContainer: {
+        paddingVertical: paddingConsts.medium,
     },
+    itemDetailsContainer: {},
+    statusButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor: colors.secondary300,
+        borderWidth: 1,
+        borderRadius: borderRadius.medium,
+        padding: paddingConsts.small,
+    },
+
+    buttonLabel: {},
 });

@@ -19,7 +19,7 @@
       "address": "Kadıköy, İstanbul, Turkey, Sahte Sokak, No: 123 Daire: 4",
       "payment": "Credit Card",
       "delivery_time": "2024-12-24T23:59:59Z",
-      "status": "PREPARING",
+      "status": "DELIVERED",
       "items": [
         {
           "id": "1",
@@ -68,22 +68,20 @@
   ],
   "baskets": [
     {
-      "id": "1",
-      "courier_id": "1",
+      "courier_id": "3",
       "status": "ON_THE_WAY",
       "orders": [
-        1,
-        2
-      ]
+        "1"
+      ],
+      "id": 1
     },
     {
-      "id": "XGND81L"
-    },
-    {
-      "id": "LiPAw1E"
-    },
-    {
-      "id": "7JI6j9Y"
+      "courier_id": "3",
+      "status": "ON_THE_WAY",
+      "orders": [
+        "1"
+      ],
+      "id": 2
     }
   ]
 }
