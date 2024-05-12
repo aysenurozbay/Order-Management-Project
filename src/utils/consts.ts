@@ -18,9 +18,22 @@ export const paddingConsts = {
     huge: 35,
 };
 export const orderStates = {
-    PENDING: 'Hazırlanıyor',
-    DELIVERED: 'Teslim Edildi',
-    ON_THE_WAY: 'Yolda',
-    CANCELLED: 'İptal Edildi',
-    IN_BASKET: 'Sepette',
+    PENDING: 'PENDING',
+    DELIVERED: 'DELIVERED',
+    ON_THE_WAY: 'ON_THE_WAY',
+    CANCELLED: 'CANCELLED',
+    IN_BASKET: 'IN_BASKET',
 };
+export const basketStates = {
+    DELIVERED: 'DELIVERED',
+    ON_THE_WAY: 'ON_THE_WAY',
+    CANCELLED: 'CANCELLED',
+    DONE: 'DONE',
+};
+export enum OrderStates {
+    PREPARING = 'Hazirlaniyor',
+    DELIVERED = 'Teslim Edildi',
+    ON_THE_WAY = 'Yolda',
+    CANCELLED = 'Iptal Edildi',
+    IN_BASKET = 'Sepette',
+}

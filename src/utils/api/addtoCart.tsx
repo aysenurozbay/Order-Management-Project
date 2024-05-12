@@ -3,8 +3,10 @@ import { AxiosError } from 'axios';
 import { Basket } from '../../data/DataTypes';
 import baseAPI from './api';
 
+type BasketWithoutId = Pick<Basket, 'courier_id' | 'status' | 'orders'>;
+
 interface PostCartProps {
-    newData: Basket;
+    newData: BasketWithoutId;
 }
 
 export interface IAddToCartProps

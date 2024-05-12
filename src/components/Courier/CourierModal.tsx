@@ -20,10 +20,14 @@ interface ICartModalModalProps {
 type RadioValue = string | number;
 
 const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalModalProps) => {
-    const handleCloseModal = () => setModalVisible(!modalVisible);
-
     const [selectCourier, setSelectCourier] = useState<RadioValue>();
     const [showError, setShowError] = useState<boolean>();
+
+    const handleCloseModal = () => {
+        setModalVisible(!modalVisible);
+        setShowError(false);
+    };
+
     const dispatch = useDispatch();
 
     const { refetch } = getBaskets();
@@ -38,10 +42,8 @@ const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalMod
         onSuccess: () => {
             dispatch(orderSlice.actions.updateCartItemStatus({ order: cartData }));
             setModalVisible(!modalVisible);
+            setShowError(false);
             refetch();
-        },
-        onError: error => {
-            console.log(`onError`, error);
         },
     });
 
@@ -50,7 +52,6 @@ const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalMod
             setShowError(true);
         } else {
             setShowError(false);
-
             const orderIds: string[] = cartData.map(order => order.id);
             const newData = {
                 courier_id: selectCourier.toString(),
@@ -87,7 +88,7 @@ const CourierModal = ({ modalVisible, setModalVisible, cartData }: ICartModalMod
                                 );
                             })}
                         </Radio.Group>
-                        {showError && <Text> Kurye secin !!!</Text>}
+                        {showError && <Text style={styles.errorText}> Kurye secin !!!</Text>}
                         <TouchableOpacity
                             style={styles.assignCourier}
                             activeOpacity={0.5}

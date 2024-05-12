@@ -1,25 +1,32 @@
-import { Icon } from '@ant-design/react-native';
 import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+
+import { Icon } from '@ant-design/react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { styles } from './BasketComponent.styles';
+
 import { Basket, Order } from '../../data/DataTypes';
-import { orderSlice, setBasketItems, updateBasketOrderStatus } from '../../store/orderSlicer';
+
+import { setBasketItems, updateBasketOrderStatus } from '../../store/orderSlicer';
 import { RootState } from '../../store/store';
+
 import { commonStyles } from '../../styles/commonStyles';
+import { BasketStateTypes, OrderStateTypes } from '../../utils/Types';
 import { getBaskets } from '../../utils/api/getBaskets';
 import { getCourier } from '../../utils/api/getCourier';
 import { getOrders } from '../../utils/api/getOrders';
 import { updateBasketStatus } from '../../utils/api/updateBasketStatus';
 import { updateOrderStatus } from '../../utils/api/updateOrderStatus';
 import colors from '../../utils/colors';
-import { styles } from './BasketComponent.styles';
+import { orderStates } from '../../utils/consts';
 
 interface IOrderComponentProps {
     basketItem: Basket;
 }
 
 const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
-    const statusLabels = {
+    const statusLabels: Record<BasketStateTypes, string> = {
         ['PREPARING']: 'Hazırlanıyor',
         ['DELIVERED']: 'Teslim Edildi',
         ['ON_THE_WAY']: 'Yolda',
@@ -51,16 +58,13 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
         dispatch(setBasketItems(orderItems));
     }, [orderItems, dispatch]);
 
-    const handleDelivery = (
-        orderStatus: 'PREPARING' | 'DELIVERED' | 'ON_THE_WAY' | 'CANCELLED' | 'IN_BASKET',
-        food: Order,
-    ) => {
+    const handleDelivery = (orderStatus: OrderStateTypes, food: Order) => {
         const order = { ...food, status: orderStatus };
         mutateOrder({ order });
     };
 
     const checkAndUpdateBasketStatus = () =>
-        !orderItems?.some(order => order.status !== 'DELIVERED' && order.status !== 'CANCELLED');
+        !orderItems?.some(order => order.status !== orderStates.DELIVERED && orderStates.CANCELLED);
 
     const { mutate: mutateBasket } = updateBasketStatus({
         onSuccess: () => {
@@ -102,14 +106,14 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
                                         <Text style={styles.address}> {food.address}</Text>
                                         <Text style={styles.address}> {food.status}</Text>
                                     </View>
-                                    {food.status === 'DELIVERED' && (
+                                    {food.status === orderStates['DELIVERED'] && (
                                         <Icon
                                             name="check-square"
                                             size={'md'}
                                             color={colors.green}
                                         />
                                     )}
-                                    {food.status === 'CANCELLED' && (
+                                    {food.status === orderStates['CANCELLED'] && (
                                         <Icon
                                             name="close-square"
                                             size={'md'}
@@ -122,7 +126,9 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
                                     <View style={styles.deliveryButtonContainer}>
                                         <TouchableOpacity
                                             activeOpacity={0.5}
-                                            onPress={() => handleDelivery('DELIVERED', food)}
+                                            onPress={() =>
+                                                handleDelivery(orderStates['DELIVERED'], food)
+                                            }
                                             style={styles.statusButton}>
                                             <Icon
                                                 name="check-square"
@@ -133,14 +139,16 @@ const BasketComponent = ({ basketItem }: IOrderComponentProps) => {
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             activeOpacity={0.5}
-                                            onPress={() => handleDelivery('CANCELLED', food)}
+                                            onPress={() =>
+                                                handleDelivery(orderStates['CANCELLED'], food)
+                                            }
                                             style={styles.statusButton}>
                                             <Icon
                                                 name="close-square"
                                                 size={'md'}
                                                 color={colors.errorPrimary}
                                             />
-                                            <Text style={styles.buttonLabel}> Teslim Edildi</Text>
+                                            <Text style={styles.buttonLabel}> Iptal Edildi</Text>
                                         </TouchableOpacity>
                                     </View>
                                 )}

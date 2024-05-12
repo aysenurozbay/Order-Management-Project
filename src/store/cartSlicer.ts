@@ -3,12 +3,10 @@ import { Order } from '../data/DataTypes';
 
 export interface CartSliceState {
     cartOrders: Order[];
-    // courier: Courier;
 }
 
 const initialState: CartSliceState = {
     cartOrders: [],
-    // courier: { name: '', id: '' },
 };
 
 export const cartSlice = createSlice({

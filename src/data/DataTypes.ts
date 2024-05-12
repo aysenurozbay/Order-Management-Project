@@ -1,3 +1,5 @@
+import { BasketStateTypes, OrderStateTypes } from '../utils/Types';
+
 export type Courier = {
     id: string;
     name: string;
@@ -8,7 +10,7 @@ export type Order = {
     address: string;
     payment: 'Cash' | 'Credit Card';
     delivery_time: string;
-    status: 'PREPARING' | 'DELIVERED' | 'ON_THE_WAY' | 'CANCELLED' | 'IN_BASKET';
+    status: OrderStateTypes;
     items: {
         id: string;
         name: string;
@@ -18,7 +20,7 @@ export type Order = {
 export type Basket = {
     id: string;
     courier_id: string;
-    status: 'ON_THE_WAY' | 'DELIVERED' | 'CANCELLED' | 'DONE';
+    status: BasketStateTypes;
     orders: string[];
 };
 

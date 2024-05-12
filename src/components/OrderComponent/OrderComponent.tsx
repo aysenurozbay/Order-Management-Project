@@ -5,32 +5,29 @@ import { Order } from '../../data/DataTypes';
 import { orderSlice } from '../../store/orderSlicer';
 import CartModal from '../Cart/CartModal';
 import { styles } from './OrderComponent.styles';
+import { OrderStateTypes } from '../../utils/Types';
 
 interface IOrderComponentProps {
     order: Order;
 }
 const OrderComponent = ({ order }: IOrderComponentProps) => {
-    const statusLabels = {
-        ['PREPARING']: 'Hazirlaniyor',
-        ['DELIVERED']: 'Teslim Edildi',
-        ['ON_THE_WAY']: 'Yolda',
-        ['CANCELLED']: 'Iptal Edildi',
-        ['IN_BASKET']: 'Sepette',
+    const statusLabels: Record<OrderStateTypes, string> = {
+        PREPARING: 'Hazirlaniyor',
+        DELIVERED: 'Teslim Edildi',
+        ON_THE_WAY: 'Yolda',
+        CANCELLED: 'Iptal Edildi',
+        IN_BASKET: 'Sepette',
     };
-
     const [modalVisible, setModalVisible] = useState(false);
 
     const handleDetailsButton = () => setModalVisible(true);
 
-    // const cartOrder = useSelector(state => state.cart.cartOrders);
     const dispatch = useDispatch();
 
     const handleAddtoCart = () => {
-        //dispatch(orderSlice.actions.removeFromOrders({ order }));
         dispatch(orderSlice.actions.addCartItem({ order }));
     };
     const handleRemoveFromCart = () => {
-        //dispatch(orderSlice.actions.removeFromOrders({ order }));
         dispatch(orderSlice.actions.removeCartItem({ order }));
     };
 

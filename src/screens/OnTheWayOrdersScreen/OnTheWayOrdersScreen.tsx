@@ -6,6 +6,7 @@ import { setBasket } from '../../store/orderSlicer';
 import { RootState } from '../../store/store';
 import { commonStyles } from '../../styles/commonStyles';
 import { getBaskets } from '../../utils/api/getBaskets';
+import { orderStates } from '../../utils/consts';
 
 const PendingOrdersScreen = () => {
     const { data, isLoading, isError } = getBaskets();
@@ -18,7 +19,7 @@ const PendingOrdersScreen = () => {
     }, [data, dispatch]);
 
     const renderItem = ({ item }: any) =>
-        item.status === 'ON_THE_WAY' ? <BasketComponent basketItem={item} /> : null;
+        item.status === orderStates['ON_THE_WAY'] ? <BasketComponent basketItem={item} /> : null;
 
     return (
         <View style={commonStyles.flex}>

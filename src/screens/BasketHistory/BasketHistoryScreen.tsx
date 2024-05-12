@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import BasketComponent from '../../components/OrderComponent/BasketComponent';
+
+import { commonStyles } from '../../styles/commonStyles';
+
 import { setBasket } from '../../store/orderSlicer';
 import { RootState } from '../../store/store';
-import { commonStyles } from '../../styles/commonStyles';
+
 import { getBaskets } from '../../utils/api/getBaskets';
-import { paddingConsts } from '../../utils/consts';
+import { basketStates, paddingConsts } from '../../utils/consts';
 
 const BasketHistoryScreen = () => {
     const { data, isLoading, isError } = getBaskets();
@@ -19,7 +23,7 @@ const BasketHistoryScreen = () => {
     }, [data, dispatch]);
 
     const renderItem = ({ item }: any) =>
-        item.status === 'DONE' ? <BasketComponent basketItem={item} /> : null;
+        item.status === basketStates.DONE ? <BasketComponent basketItem={item} /> : null;
 
     return (
         <View style={[commonStyles.flex, { paddingTop: paddingConsts.huge }]}>

@@ -6,15 +6,12 @@ export const styles = StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: 'center',
-        // alignItems: 'center',
-        // marginTop: 22,
     },
     modalView: {
         margin: 20,
         backgroundColor: colors.white,
         borderRadius: 20,
         padding: 35,
-        // alignItems: 'center',
         shadowColor: colors.black,
         shadowOffset: {
             width: 0,
@@ -23,29 +20,6 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-    },
-    foodNameContainer: {
-        flexDirection: 'row',
-    },
-    foodName: {
-        fontWeight: '600',
-        fontSize: 14,
-        color: colors.gray100,
-        paddingRight: paddingConsts.tiny,
-    },
-    address: {
-        paddingVertical: paddingConsts.tiny,
-        fontSize: 12,
-    },
-    statusText: {
-        marginVertical: paddingConsts.small,
-        color: colors.orange,
-        fontWeight: '600',
-    },
-    headerContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
     },
     closeIcon: {
         position: 'absolute',
@@ -63,12 +37,18 @@ export const styles = StyleSheet.create({
         padding: paddingConsts.small,
     },
     assignCourier: {
-        width: `100%`,
+        width: '100%',
         backgroundColor: colors.secondary200,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: marginConsts.medium,
         padding: paddingConsts.small,
         borderRadius: borderRadius.large,
+    },
+    errorText: {
+        color: colors.errorPrimary,
+        fontSize: 15,
+        fontWeight: '600',
+        paddingVertical: paddingConsts.small,
     },
 });
